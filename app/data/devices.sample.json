@@ -353,7 +353,7 @@
       "curl/8.7.1"
     ],
     "is_active": false,
-    "has_custom_blocklist": false,
+    "has_custom_blocklist": true,
     "group": {
       "id": 2,
       "name": "Staff",
@@ -385,7 +385,7 @@
       "netflix": false,
       "youtube": false,
       "ai": false,
-      "safesearch": false
+      "safesearch": true
     },
     "ai_classification": {
       "device_type": "Network attached storage",
