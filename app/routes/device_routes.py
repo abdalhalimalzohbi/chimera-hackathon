@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Path, Body
 from app.schemas.device import Device, DeviceUpdate, DeviceAction, Summary
 from app.controllers.device_controller import DeviceController
 from typing import List
@@ -39,8 +39,8 @@ async def get_summary():
 
 @router.patch("/devices/{device_id}", response_model=Device, summary="Update Device")
 async def update_device(
-    device_id: int, 
-    update_data: DeviceUpdate
+    device_id: int = Path(..., description="Device ID to update", ge=1), 
+    update_data: DeviceUpdate = Body(..., description="Device update data")
 ):
     """
     Update device properties with partial data.
@@ -60,8 +60,8 @@ async def update_device(
 
 @router.post("/devices/{device_id}/actions", response_model=Device, summary="Perform Device Action")
 async def perform_device_action(
-    device_id: int, 
-    action_data: DeviceAction
+    device_id: int = Path(..., description="Device ID to perform action on", ge=1), 
+    action_data: DeviceAction = Body(..., description="Action to perform")
 ):
     """
     Perform actions on devices to manage their blocklist settings.
@@ -84,11 +84,12 @@ async def perform_device_action(
       - Sets `has_custom_blocklist = true`
     
     **Note:** All actions automatically set `has_custom_blocklist = true`
+    
+    **Validation:**
+    - Action must be one of: isolate, release, toggle_block
+    - Category is required when action is toggle_block
+    - Pydantic automatically validates the request body
     """
-    if action_data.action not in ["isolate", "release", "toggle_block"]:
-        raise HTTPException(status_code=400, detail="Invalid action")
-    if action_data.action == "toggle_block" and not action_data.category:
-        raise HTTPException(status_code=400, detail="Category is required for toggle_block action")
     device = device_controller.perform_device_action(device_id, action_data.action, action_data.category)
     if not device:
         raise HTTPException(status_code=404, detail="Device not found")
