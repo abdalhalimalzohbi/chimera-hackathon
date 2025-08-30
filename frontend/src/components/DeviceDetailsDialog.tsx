@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   Dialog,
   DialogTitle,
@@ -14,16 +14,12 @@ import {
   AccordionDetails,
   TextField,
   FormControl,
-  InputLabel,
   Select,
   MenuItem,
   Alert,
   Paper,
-  Divider,
-  IconButton,
   Tooltip,
   Fade,
-  Slide,
   useTheme,
   alpha,
 } from '@mui/material';
@@ -34,16 +30,12 @@ import {
   Cancel,
   Computer,
   NetworkCheck,
-  Security,
   Info,
-  Schedule,
-  Category,
   Memory,
   Speed,
   Shield,
   Block,
   CheckCircle,
-  Warning,
   Close,
 } from '@mui/icons-material';
 import type { Device, DeviceUpdate } from '../types/device';
@@ -69,7 +61,10 @@ const DeviceDetailsDialog: React.FC<DeviceDetailsDialogProps> = ({
 
   const handleEdit = () => {
     setIsEditing(true);
-    setEditData({});
+    setEditData({
+      given_name: device.given_name,
+      group_id: device.group.id,
+    });
     setError(null);
   };
 
@@ -95,9 +90,12 @@ const DeviceDetailsDialog: React.FC<DeviceDetailsDialogProps> = ({
     setError(null);
   };
 
-  const handleFieldChange = (field: keyof DeviceUpdate, value: any) => {
-    setEditData(prev => ({ ...prev, [field]: value }));
-  };
+  const handleFieldChange = useCallback((field: keyof DeviceUpdate, value: any) => {
+    setEditData(prev => {
+      const newData = { ...prev, [field]: value };
+      return newData;
+    });
+  }, []);
 
   const getBlocklistStatus = (blocklist: Device['blocklist']) => {
     const blockedCount = Object.values(blocklist).filter(Boolean).length;
@@ -157,33 +155,57 @@ const DeviceDetailsDialog: React.FC<DeviceDetailsDialogProps> = ({
     </Paper>
   );
 
-  const InfoField = ({ label, value, isEditing, field, onChange, type = 'text' }: {
+
+  const InfoField = useCallback(({ label, value, isEditing, field, onChange, type = 'text' }: {
     label: string;
     value: any;
     isEditing?: boolean;
     field?: keyof DeviceUpdate;
     onChange?: (value: any) => void;
     type?: 'text' | 'select' | 'chip';
-  }) => (
-    <Box sx={{ mb: 2.5 }}>
-      <Typography
-        variant="body2"
-        color="textSecondary"
-        sx={{
-          fontWeight: 500,
-          mb: 1,
-          textTransform: 'uppercase',
-          letterSpacing: '0.5px',
-          fontSize: '0.75rem',
-        }}
-      >
-        {label}
-      </Typography>
-      {isEditing && onChange ? (
-        type === 'select' ? (
-          <FormControl fullWidth size="small">
-            <Select
-              value={editData[field!] ?? value}
+  }) => {
+    const currentValue = field && editData[field] !== undefined ? editData[field] : value;
+
+    
+    return (
+      <Box sx={{ mb: 2.5 }}>
+        <Typography
+          variant="body2"
+          color="textSecondary"
+          sx={{
+            fontWeight: 500,
+            mb: 1,
+            textTransform: 'uppercase',
+            letterSpacing: '0.5px',
+            fontSize: '0.75rem',
+          }}
+        >
+          {label}
+        </Typography>
+        {isEditing && onChange ? (
+          type === 'select' ? (
+            <FormControl fullWidth size="small">
+              <Select
+                value={currentValue}
+                onChange={(e) => onChange(e.target.value)}
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    borderRadius: 1.5,
+                    backgroundColor: theme.palette.background.paper,
+                  },
+                }}
+              >
+                <MenuItem value={1}>Default Group</MenuItem>
+                <MenuItem value={2}>Staff</MenuItem>
+                <MenuItem value={3}>Guests</MenuItem>
+                <MenuItem value={4}>IoT</MenuItem>
+              </Select>
+            </FormControl>
+          ) : (
+            <TextField
+              fullWidth
+              size="small"
+              value={currentValue}
               onChange={(e) => onChange(e.target.value)}
               sx={{
                 '& .MuiOutlinedInput-root': {
@@ -191,44 +213,26 @@ const DeviceDetailsDialog: React.FC<DeviceDetailsDialogProps> = ({
                   backgroundColor: theme.palette.background.paper,
                 },
               }}
-            >
-              <MenuItem value={1}>Default Group</MenuItem>
-              <MenuItem value={2}>Staff</MenuItem>
-              <MenuItem value={3}>Guests</MenuItem>
-              <MenuItem value={4}>IoT</MenuItem>
-            </Select>
-          </FormControl>
+            />
+          )
         ) : (
-          <TextField
-            fullWidth
-            size="small"
-            value={editData[field!] ?? value}
-            onChange={(e) => onChange(e.target.value)}
+          <Typography
+            variant="body1"
             sx={{
-              '& .MuiOutlinedInput-root': {
-                borderRadius: 1.5,
-                backgroundColor: theme.palette.background.paper,
-              },
+              fontWeight: 500,
+              color: theme.palette.text.primary,
+              backgroundColor: alpha(theme.palette.primary.main, 0.05),
+              p: 1.5,
+              borderRadius: 1,
+              border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
             }}
-          />
-        )
-      ) : (
-        <Typography
-          variant="body1"
-          sx={{
-            fontWeight: 500,
-            color: theme.palette.text.primary,
-            backgroundColor: alpha(theme.palette.primary.main, 0.05),
-            p: 1.5,
-            borderRadius: 1,
-            border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
-          }}
-        >
-          {value || 'Not set'}
-        </Typography>
-      )}
-    </Box>
-  );
+          >
+            {value || 'Not set'}
+          </Typography>
+        )}
+      </Box>
+    );
+  }, [editData, theme.palette.background.paper, theme.palette.primary.main, theme.palette.text.primary]);
 
   return (
     <Dialog
@@ -355,16 +359,51 @@ const DeviceDetailsDialog: React.FC<DeviceDetailsDialogProps> = ({
         )}
 
         <Grid container spacing={4}>
-          {/* Basic Information */}
           <Grid xs={12} md={6}>
             <InfoSection title="Basic Information" icon={<Info />} color="primary">
-              <InfoField
-                label="Device Name"
-                value={device.given_name}
-                isEditing={isEditing}
-                field="given_name"
-                onChange={(value) => handleFieldChange('given_name', value)}
-              />
+              <Box sx={{ mb: 2.5 }}>
+                <Typography
+                  variant="body2"
+                  color="textSecondary"
+                  sx={{
+                    fontWeight: 500,
+                    mb: 1,
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.5px',
+                    fontSize: '0.75rem',
+                  }}
+                >
+                  Device Name
+                </Typography>
+                {isEditing ? (
+                  <TextField
+                    fullWidth
+                    size="small"
+                    defaultValue={device.given_name || ''}
+                    onBlur={(e) => handleFieldChange('given_name', e.target.value)}
+                    sx={{
+                      '& .MuiOutlinedInput-root': {
+                        borderRadius: 1.5,
+                        backgroundColor: theme.palette.background.paper,
+                      },
+                    }}
+                  />
+                ) : (
+                  <Typography
+                    variant="body1"
+                    sx={{
+                      fontWeight: 500,
+                      color: theme.palette.text.primary,
+                      backgroundColor: alpha(theme.palette.primary.main, 0.05),
+                      p: 1.5,
+                      borderRadius: 1,
+                      border: `1px solid ${alpha(theme.palette.primary.main, 0.1)}`,
+                    }}
+                  >
+                    {device.given_name || 'Not set'}
+                  </Typography>
+                )}
+              </Box>
               <InfoField label="Hostname" value={device.hostname} />
               <InfoField label="Vendor" value={device.vendor} />
               <InfoField label="IP Address" value={device.ip} />

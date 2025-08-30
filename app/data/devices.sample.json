@@ -63,7 +63,7 @@
     "mac": "B8:27:EB:10:22:33",
     "hostname": "ap-lobby",
     "vendor": "Ubiquiti",
-    "given_name": "Lobby Apppppp",
+    "given_name": "Lobby Appppppppaa",
     "ip": "192.168.69.2",
     "user_agent": [
       "UAP/6.5 EdgeOS"
@@ -291,7 +291,7 @@
     "mac": "52:54:00:AA:BB:CC",
     "hostname": "nas-01",
     "vendor": "Synology",
-    "given_name": "NAS",
+    "given_name": "sdd",
     "ip": "192.168.69.20",
     "user_agent": [
       "SynologyDS/7.2.1"
@@ -299,8 +299,8 @@
     "is_active": true,
     "has_custom_blocklist": true,
     "group": {
-      "id": 4,
-      "name": "IoT",
+      "id": 3,
+      "name": "Guests",
       "is_default": false
     },
     "first_seen": "2025-08-13T19:00:08.235974",
@@ -355,8 +355,8 @@
     "is_active": false,
     "has_custom_blocklist": true,
     "group": {
-      "id": 4,
-      "name": "IoT",
+      "id": 2,
+      "name": "Staff",
       "is_default": false
     },
     "first_seen": "2025-08-13T19:00:08.252811",
@@ -461,7 +461,7 @@
     "mac": "00:1F:A0:12:34:56",
     "hostname": "hp-laser",
     "vendor": "HP",
-    "given_name": "Printer",
+    "given_name": "asdasdasd",
     "ip": "192.168.69.60",
     "user_agent": [
       "HP JetDirect/73.1"
@@ -515,7 +515,7 @@
     "mac": "BE:53:4A:F8:B5:12",
     "hostname": "filesrv",
     "vendor": "Dell",
-    "given_name": "abdalhalim",
+    "given_name": "hello",
     "ip": "192.168.69.30",
     "user_agent": [
       "Mozilla/5.0 (X11; Ubuntu 22.04)"
@@ -523,8 +523,8 @@
     "is_active": true,
     "has_custom_blocklist": true,
     "group": {
-      "id": 4,
-      "name": "IoT",
+      "id": 2,
+      "name": "Staff",
       "is_default": false
     },
     "first_seen": "2025-08-13T09:00:08.235974",
