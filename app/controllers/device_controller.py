@@ -92,7 +92,6 @@ class DeviceController:
         
         if action == "isolate":
             for field in device.blocklist.model_fields:
-                if field != "safesearch":
                     setattr(device.blocklist, field, True)
             device.has_custom_blocklist = True
             

@@ -63,16 +63,16 @@
     "mac": "B8:27:EB:10:22:33",
     "hostname": "ap-lobby",
     "vendor": "Ubiquiti",
-    "given_name": "Lobby AP",
+    "given_name": "Lobby Apppppp",
     "ip": "192.168.69.2",
     "user_agent": [
       "UAP/6.5 EdgeOS"
     ],
     "is_active": true,
-    "has_custom_blocklist": false,
+    "has_custom_blocklist": true,
     "group": {
-      "id": 4,
-      "name": "IoT",
+      "id": 3,
+      "name": "Guests",
       "is_default": false
     },
     "first_seen": "2025-08-12T09:16:44.221001",
@@ -92,7 +92,7 @@
       "ads_trackers": false,
       "gambling": false,
       "social_media": false,
-      "porn": false,
+      "porn": true,
       "gaming": false,
       "streaming": false,
       "facebook": false,
@@ -234,7 +234,7 @@
     "mac": "14:AE:DB:90:11:22",
     "hostname": "lobby-tv",
     "vendor": "Samsung",
-    "given_name": "Lobby TV",
+    "given_name": "Lobby T",
     "ip": "192.168.69.80",
     "user_agent": [
       "Mozilla/5.0 (SMART-TV; Tizen 7.0) AppleWebKit/537.36"
@@ -265,13 +265,13 @@
       "social_media": true,
       "porn": true,
       "gaming": true,
-      "streaming": false,
+      "streaming": true,
       "facebook": true,
       "instagram": true,
       "tiktok": true,
-      "netflix": false,
+      "netflix": true,
       "youtube": true,
-      "ai": false,
+      "ai": true,
       "safesearch": true
     },
     "ai_classification": {
@@ -297,10 +297,10 @@
       "SynologyDS/7.2.1"
     ],
     "is_active": true,
-    "has_custom_blocklist": false,
+    "has_custom_blocklist": true,
     "group": {
-      "id": 4,
-      "name": "IoT",
+      "id": 2,
+      "name": "Staff",
       "is_default": false
     },
     "first_seen": "2025-08-13T19:00:08.235974",
@@ -319,7 +319,7 @@
     "blocklist": {
       "ads_trackers": false,
       "gambling": false,
-      "social_media": true,
+      "social_media": false,
       "porn": true,
       "gaming": true,
       "streaming": true,
@@ -347,7 +347,7 @@
     "mac": "AC:45:EF:07:A7:D3",
     "hostname": "Unknown",
     "vendor": "Unknown",
-    "given_name": "Unassigned",
+    "given_name": "dasdasdasdasdasd",
     "ip": "192.168.69.183",
     "user_agent": [
       "curl/8.7.1"
@@ -355,9 +355,9 @@
     "is_active": false,
     "has_custom_blocklist": false,
     "group": {
-      "id": 1,
-      "name": "Default Group",
-      "is_default": true
+      "id": 2,
+      "name": "Staff",
+      "is_default": false
     },
     "first_seen": "2025-08-13T19:00:08.252811",
     "last_seen": "2025-08-13T19:00:08.252551",
@@ -467,7 +467,7 @@
       "HP JetDirect/73.1"
     ],
     "is_active": false,
-    "has_custom_blocklist": false,
+    "has_custom_blocklist": true,
     "group": {
       "id": 3,
       "name": "Guests",
@@ -487,15 +487,15 @@
     "blocklist": {
       "ads_trackers": false,
       "gambling": false,
-      "social_media": true,
-      "porn": true,
-      "gaming": true,
-      "streaming": true,
-      "facebook": true,
-      "instagram": true,
-      "tiktok": true,
-      "netflix": true,
-      "youtube": true,
+      "social_media": false,
+      "porn": false,
+      "gaming": false,
+      "streaming": false,
+      "facebook": false,
+      "instagram": false,
+      "tiktok": false,
+      "netflix": false,
+      "youtube": false,
       "ai": false,
       "safesearch": true
     },
@@ -523,8 +523,8 @@
     "is_active": true,
     "has_custom_blocklist": true,
     "group": {
-      "id": 2,
-      "name": "Staff",
+      "id": 4,
+      "name": "IoT",
       "is_default": false
     },
     "first_seen": "2025-08-13T09:00:08.235974",
@@ -541,19 +541,19 @@
     ],
     "os_last_updated": "2025-08-29T06:03:09.674192",
     "blocklist": {
-      "ads_trackers": false,
-      "gambling": false,
-      "social_media": false,
-      "porn": false,
-      "gaming": false,
-      "streaming": false,
-      "facebook": false,
-      "instagram": false,
-      "tiktok": false,
-      "netflix": false,
-      "youtube": false,
-      "ai": false,
-      "safesearch": true
+      "ads_trackers": true,
+      "gambling": true,
+      "social_media": true,
+      "porn": true,
+      "gaming": true,
+      "streaming": true,
+      "facebook": true,
+      "instagram": true,
+      "tiktok": true,
+      "netflix": true,
+      "youtube": true,
+      "ai": true,
+      "safesearch": false
     },
     "ai_classification": {
       "device_type": "Server",
