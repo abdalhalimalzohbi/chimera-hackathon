@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, field_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 from typing import List, Optional
 
 
@@ -213,11 +213,11 @@ class DeviceAction(BaseModel):
         examples=["social_media"]
     )
 
-    @field_validator('category')
-    def validate_category(cls, v, values):
-        if values.get('action') == 'toggle_block' and not v:
+    @model_validator(mode='after')
+    def validate_category_required(self):
+        if self.action == 'toggle_block' and not self.category:
             raise ValueError('category is required when action is toggle_block')
-        return v
+        return self
 
     model_config = {
         "json_schema_extra": {

@@ -488,7 +488,7 @@
       "ads_trackers": false,
       "gambling": false,
       "social_media": false,
-      "porn": false,
+      "porn": true,
       "gaming": false,
       "streaming": false,
       "facebook": false,
